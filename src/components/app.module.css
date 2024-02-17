@@ -1,0 +1,12 @@
+.list{
+   position: relative;
+   display: flex;
+   gap: 5px;
+
+}
+
+.reset{
+    position: absolute;
+    left: 171px;
+    top: 114px;
+}
