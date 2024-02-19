@@ -1,11 +1,16 @@
-const Options = ({ data: {good, neutral, bad} }) => {
+const Options = ({ data: {good, neutral, bad}, onFeedback, onReset, totalComments }) => {
+  
     return (
     <div>
-      <p> Good: {good} </p>
-      <p> Neutral: {neutral} </p>
-      <p> Bad: {bad} </p>
-  
+        <button onClick={() => onFeedback("good")}> Good</button>
+        <button onClick={() => onFeedback("neutral")}>Neutral</button>
+        <button onClick={() => onFeedback("bad")}> Bad</button>
+        {totalComments > 0 && (
+        <button onClick={onReset}>Reset</button>
+      )}
+
     </div>
     )}
+
 
   export default Options;
