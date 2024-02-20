@@ -1,4 +1,6 @@
-const Options = ({ data: {good, neutral, bad}, onFeedback, onReset, totalComments }) => {
+import PropTypes from 'prop-types';
+
+const Options = ({ onFeedback, onReset, totalComments }) => {
   
     return (
     <div>
@@ -11,6 +13,13 @@ const Options = ({ data: {good, neutral, bad}, onFeedback, onReset, totalComment
 
     </div>
     )}
+
+    Options.propTypes = {
+      onFeedback: PropTypes.func.isRequired,
+      onReset: PropTypes.func.isRequired,
+      totalComments: PropTypes.number.isRequired,
+    };
+    
 
 
   export default Options;

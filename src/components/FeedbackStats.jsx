@@ -1,9 +1,8 @@
+import PropTypes from 'prop-types';
 
-const FeedbackStats = ({ goodCount, neutralCount, badCount, totalCount }) => {
+const Feedback = ({ goodCount, neutralCount, badCount, totalCount }) => {
 
-const positivePercentage = 
-totalCount = Math.round((goodCount / totalCount) * 100) ;
-
+const positivePercentage = Math.round((goodCount / totalCount) * 100) ;
 
   return (
     <div>
@@ -17,4 +16,13 @@ totalCount = Math.round((goodCount / totalCount) * 100) ;
 };
 
 
-export default FeedbackStats;
+Feedback.propTypes = {
+  goodCount: PropTypes.number.isRequired,
+  neutralCount: PropTypes.number.isRequired,
+  badCount: PropTypes.number.isRequired,
+  totalCount:PropTypes.number.isRequired,
+
+};
+
+
+export default Feedback;

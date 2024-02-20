@@ -1,20 +1,25 @@
 import { useState } from 'react'; 
 import { useEffect } from 'react';
 
-import FeedbackStats from "./FeedbackStats";
+import Description from './Description';
+import Feedback from "./FeedbackStats";
 import Options from "./Options"
 import Notification from "./Notification"
 
-
 export const App = () => {
 
-const description = { 
-  good: 0,
-  neutral: 0,
-  bad: 0
+const getInitialData = { 
+    good: 0,
+    neutral: 0,
+    bad: 0
+  }
+
+const getInitialClicks = () => {
+  const savedData = window.localStorage.getItem("feedbackData");
+  return savedData ? JSON.parse(savedData) : getInitialData;
 }
 
-const [feedbackData, setFeedbackData]  = useState(description);
+const [feedbackData, setFeedbackData]  = useState(getInitialClicks);
 
 const updateFeedback = feedbackType => {
   setFeedbackData(prevData => {
@@ -23,54 +28,43 @@ const updateFeedback = feedbackType => {
     [feedbackType]: prevData[feedbackType] + 1
     };
   
-    window.localStorage.setItem("feedbackData", JSON.stringify(updatedData));
-  
-    return updatedData;
+      return updatedData;
     });
   };
-
-  useEffect(() => {
-    const savedData = window.localStorage.getItem("feedbackData");
-
-    if (savedData !== null) {
-      setFeedbackData(JSON.parse(savedData));
-    }
-  }, []);
-  
 
 const totalComments = feedbackData.good + feedbackData.neutral + feedbackData.bad
 
 const handleReset = () => {
-    setFeedbackData(description);
-  };
+  setFeedbackData(getInitialData);
+};
 
-useEffect(() => {
-    window.localStorage.setItem("feedbackData", JSON.stringify(feedbackData));
-  }, [feedbackData]);
+const setClicks = () => {
+  window.localStorage.setItem("feedbackData", JSON.stringify(feedbackData));
+}
+
+useEffect(setClicks, [feedbackData]);
   
 
   return (
     <div>
-      <h1>Sip Happens Café</h1>
-      <p>Please leave your feedback about our service by selecting one of the options below.</p>
-  
-      <div>
-        <Options data={feedbackData} onFeedback={updateFeedback} onReset={handleReset} totalComments = {totalComments}/>
-      </div>
-  
-      <div>
+
+      <Description/>
+      <Options 
+      onFeedback={updateFeedback}
+      onReset={handleReset}
+      totalComments = {totalComments}/>
 
       {totalComments === 0 ? 
-      <Notification /> : 
-      <FeedbackStats
+      <Notification message = "No feedback yet" /> : 
+      <Feedback
       goodCount={feedbackData.good}
       neutralCount={feedbackData.neutral}
       badCount={feedbackData.bad}
       totalCount={totalComments}
-       /> }  
+       /> 
+       }  
 
-    
-      </div>
+  
     </div>
   );
 };
