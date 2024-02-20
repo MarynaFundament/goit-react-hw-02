@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Feedback = ({ goodCount, neutralCount, badCount, totalCount }) => {
-
-const positivePercentage = Math.round((goodCount / totalCount) * 100) ;
+const Feedback = ({ goodCount, neutralCount, badCount, totalCount, percentage }) => {
 
   return (
     <div>
@@ -10,7 +8,7 @@ const positivePercentage = Math.round((goodCount / totalCount) * 100) ;
       <p>Neutral: {neutralCount}</p>
       <p>Bad: {badCount}</p>
       <p>Total: {totalCount}</p>
-      <p>Positive: {positivePercentage} %</p>
+      <p>Positive: {percentage} %</p>
     </div>
   );
 };

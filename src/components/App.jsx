@@ -6,13 +6,13 @@ import Feedback from "./FeedbackStats";
 import Options from "./Options"
 import Notification from "./Notification"
 
-export const App = () => {
-
 const getInitialData = { 
-    good: 0,
-    neutral: 0,
-    bad: 0
-  }
+  good: 0,
+  neutral: 0,
+  bad: 0
+}
+
+export const App = () => {
 
 const getInitialClicks = () => {
   const savedData = window.localStorage.getItem("feedbackData");
@@ -32,39 +32,42 @@ const updateFeedback = feedbackType => {
     });
   };
 
-const totalComments = feedbackData.good + feedbackData.neutral + feedbackData.bad
 
 const handleReset = () => {
   setFeedbackData(getInitialData);
 };
 
-const setClicks = () => {
+useEffect(() => {
   window.localStorage.setItem("feedbackData", JSON.stringify(feedbackData));
-}
+}, [feedbackData]);
 
-useEffect(setClicks, [feedbackData]);
+const totalComments = feedbackData.good + feedbackData.neutral + feedbackData.bad
+const positivePercentage = Math.round(((feedbackData.good + feedbackData.neutral) / totalComments) * 100)
+
   
-
   return (
     <div>
 
-      <Description/>
+      <Description
+      header = "Sip Happens Café "
+      text = "Please leave your feedback about our service by selecting one of the options below." />
       <Options 
       onFeedback={updateFeedback}
       onReset={handleReset}
       totalComments = {totalComments}/>
 
       {totalComments === 0 ? 
-      <Notification message = "No feedback yet" /> : 
+         (<Notification message = "No feedback yet" /> ) : (
       <Feedback
       goodCount={feedbackData.good}
       neutralCount={feedbackData.neutral}
       badCount={feedbackData.bad}
       totalCount={totalComments}
+      percentage={positivePercentage}
        /> 
-       }  
+       )}  
 
-  
+
     </div>
   );
 };

@@ -1,12 +1,21 @@
+import PropTypes from 'prop-types';
 
-const Description = () => {
+const Description = ({header, text}) => {
     return (
-        
         <div>    
-        <h1>Sip Happens Café</h1>
-        <p>Please leave your feedback about our service by selecting one of the options below.</p>
+        <h1> {header} </h1>
+        <p> {text}</p>
         </div>
     )
 }
+
+Description.propTypes = {
+    goodCount: PropTypes.number.isRequired,
+    neutralCount: PropTypes.number.isRequired,
+    badCount: PropTypes.number.isRequired,
+    totalCount:PropTypes.number.isRequired,
+  
+  };
+  
 
 export default Description

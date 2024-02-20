@@ -7,9 +7,13 @@ const Notification = ({ message }) => {
     </div>
   )}
 
-
   Notification.propTypes = {
     message: PropTypes.string.isRequired,
   };
+  
+  Notification.defaultProps = {
+    message: 'No feedback yet'
+  };
 
+  
 export default Notification
